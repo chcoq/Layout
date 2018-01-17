@@ -1,5 +1,6 @@
 package sm.fr.advancedlayoutapp;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,31 +14,36 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class dRAWERActivity extends AppCompatActivity
+import sm.fr.advancedlayoutapp.model.User;
+
+public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Instanciation de l'utilisateur
+        this.user = new User();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -74,17 +80,45 @@ public class dRAWERActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            navigateToFragment(new FragmentB());
         } else if (id == R.id.nav_gallery) {
-
+            navigateToFragment(new FragmentInscription());
         } else if (id == R.id.nav_slideshow) {
-
+            navigateToFragment(new RandomUserFragment());
         } else if (id == R.id.nav_manage) {
+
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Affichage du fragment passé en argument à la place
+     * du composant identifié comme fragmentContainer
+     * @param targetFragment
+     */
+    private void navigateToFragment(Fragment targetFragment){
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, targetFragment)
+                .commit();
+    }
+
+    /**
+     * Méthode permettant d'accèder à l'utilisateur
+     * @return
+     */
+    public User getUser(){
+        return this.user;
+    }
+
+    /**
+     * Naviguer vers le fragment B
+     */
+    public void goToFragmentB(){
+        navigateToFragment(new FragmentB());
     }
 }
