@@ -41,6 +41,7 @@ public class RandomUserFragment extends Fragment implements AdapterView.OnItemCl
         // Required empty public constructor
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,13 +61,12 @@ public class RandomUserFragment extends Fragment implements AdapterView.OnItemCl
         //Transformation de la réponse json en list de RandomUser
         userList = responseToList(response);
 
-        //Conversion de la liste de RandomUser en un tableau de STrin comportant
+        //Conversion de la liste de RandomUser en un tableau de String comportant
         //uniquement le nom des utilisateurs
         String[] data = new String[userList.size()];
-        for(int i=0; i < userList.size(); i++){
+        for(int i =0; i < userList.size(); i++){
             data[i] = userList.get(i).getName();
         }
-
         //Définition d'un ArrayAdapter pour alimenter la ListView
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this.getActivity(),
@@ -75,13 +75,15 @@ public class RandomUserFragment extends Fragment implements AdapterView.OnItemCl
         );
 
         userListView.setAdapter(adapter);
+
     }
 
     private void getDataFromHttp(){
-        String url= "https://jsonplaceholder.typicode.com/users";
+        String url = "https://jsonplaceholder.typicode.com/users";
 
         //Définition de la requête
         StringRequest request = new StringRequest(
+                //Méthode de la requête http
                 Request.Method.GET,
                 url,
                 //Gestionnaire de succès
@@ -90,38 +92,41 @@ public class RandomUserFragment extends Fragment implements AdapterView.OnItemCl
                     public void onResponse(String response) {
                         Log.i("HTTP", response);
                         processResponse(response);
-
                     }
                 },
                 //Gestionnaire d'erreur
-                new Response.ErrorListener(){
+                new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error){
-                        Log.d("HTTP",error.getMessage());
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("HTTP", error.getMessage());
                     }
                 }
         );
 
-        //Ajouter la requête à la file d'exécution
+        //Ajout de la requête à la file d'exécution
         Volley  .newRequestQueue(this.getActivity())
                 .add(request);
     }
 
-    //Conversion d'une réponse JSON(chaine de caractère)
-    //en une liste RandomUser
+    /**
+     * Conversion d'une réponse json (chaîne de caractère)
+     * en une liste de RandomUser
+     * @param response
+     * @return
+     */
     private List<RandomUser> responseToList(String response){
         List<RandomUser> list = new ArrayList<>();
 
         try {
             JSONArray jsonUsers = new JSONArray(response);
             JSONObject item;
-            for(int i = 0; i < jsonUsers.length(); i++){
+            for(int i =0; i < jsonUsers.length(); i++){
                 item = (JSONObject) jsonUsers.get(i);
 
                 //Création d'un nouvel utilisateur
                 RandomUser user = new RandomUser();
 
-                //Hydratation de l'utilisateur
+                //hydratation de l'utilisateur
                 user.setName(item.getString("name"));
                 user.setEmail(item.getString("email"));
 
@@ -130,10 +135,9 @@ public class RandomUserFragment extends Fragment implements AdapterView.OnItemCl
                 user.setLatitude(geo.getDouble("lat"));
                 user.setLongitude(geo.getDouble("lng"));
 
-                //Ajout de l'utilisateur à la liste
+                //ajout de l'utilisateur à la liste
                 list.add(user);
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -143,10 +147,10 @@ public class RandomUserFragment extends Fragment implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        //Récupération de l'utilisateru sur le quel on vient cliquer
+        //Récupération de l'utilisateur sur lequel on vient de cliquer
         RandomUser selectedUser = this.userList.get(position);
 
-        //Création d'unez intention pour l'affichage de la carte
+        //Création d'un intention pour l'affichage de la carte
         Intent mapIntention = new Intent(this.getActivity(), MapsActivity.class);
 
         //Passage des paramètres
