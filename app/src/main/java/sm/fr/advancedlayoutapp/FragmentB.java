@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -37,6 +38,14 @@ public class FragmentB extends Fragment {
                         .beginTransaction().remove(myself).commit();
             }
         });
+
+        //Référence de l'activité principale
+        DrawerActivity myActivity = (DrawerActivity) getActivity();
+
+        //Affichage du nom de l'utilisateur
+        TextView myTextView = view.findViewById(R.id.textViewFragmentB);
+        //Définition du texte dans le fragment
+        myTextView.setText(myActivity.getUser().getUserName());
 
         return view;
     }
