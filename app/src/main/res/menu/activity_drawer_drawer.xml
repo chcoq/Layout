@@ -6,7 +6,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/action_login"
-            android:title="Login" />
+            android:icon="@android:drawable/ic_partial_secure"
+            android:onClick="onLogin"
+            android:title="Login"/>
+
+        <item android:id="@+id/action_logout"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:onClick="onLogout"
+            android:title="Logout"
+            android:visible="false"
+            />
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
