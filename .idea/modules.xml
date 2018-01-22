@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/android-advanced-layout-app.iml" filepath="$PROJECT_DIR$/android-advanced-layout-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Layout.iml" filepath="$PROJECT_DIR$/Layout.iml" />
+      <module fileurl="file://D:\AndroidStudioProjects\Layout\android-advanced-layout-app.iml" filepath="D:\AndroidStudioProjects\Layout\android-advanced-layout-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\AndroidStudioProjects\Layout\app\app.iml" filepath="D:\AndroidStudioProjects\Layout\app\app.iml" />
     </modules>
   </component>
 </project>
