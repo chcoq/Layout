@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+    //activation du databinding
+    dataBinding{
+        enabled = true
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "sm.fr.advancedlayoutapp"
@@ -17,6 +21,7 @@ android {
         }
     }
 }
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
